@@ -1,0 +1,390 @@
+---
+title: 'Error Responses'
+description: 'Understanding error codes and troubleshooting common issues with Tuesday APIs'
+icon: 'triangle-exclamation'
+---
+
+## Overview
+
+The Tuesday Public APIs use standard HTTP status codes to indicate the success or failure of API requests. When an error occurs, the response will include a structured error message to help you understand and resolve the issue.
+
+## Error Response Format
+
+All error responses follow this consistent structure:
+
+```json
+{
+    "statusCode": 400,
+    "message": "Bad Request",
+    "error": "Detailed error description"
+}
+```
+
+## Common Error Codes
+
+<div className="space-y-6">
+  <div className="border-l-4 border-red-500 bg-red-50 p-4">
+    <div className="flex">
+      <div className="ml-3">
+        <h3 className="text-sm font-medium text-red-800">
+          400 - Bad Request
+        </h3>
+        <div className="mt-2 text-sm text-red-700">
+          <p>Invalid or missing required parameters in your request.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div className="border-l-4 border-yellow-500 bg-yellow-50 p-4">
+    <div className="flex">
+      <div className="ml-3">
+        <h3 className="text-sm font-medium text-yellow-800">
+          401 - Unauthorized
+        </h3>
+        <div className="mt-2 text-sm text-yellow-700">
+          <p>Invalid or missing API key in request headers.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div className="border-l-4 border-orange-500 bg-orange-50 p-4">
+    <div className="flex">
+      <div className="ml-3">
+        <h3 className="text-sm font-medium text-orange-800">
+          402 - Insufficient Credits
+        </h3>
+        <div className="mt-2 text-sm text-orange-700">
+          <p>Not enough credits available to complete the request.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div className="border-l-4 border-blue-500 bg-blue-50 p-4">
+    <div className="flex">
+      <div className="ml-3">
+        <h3 className="text-sm font-medium text-blue-800">
+          404 - Not Found
+        </h3>
+        <div className="mt-2 text-sm text-blue-700">
+          <p>The requested resource could not be found.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div className="border-l-4 border-purple-500 bg-purple-50 p-4">
+    <div className="flex">
+      <div className="ml-3">
+        <h3 className="text-sm font-medium text-purple-800">
+          429 - Rate Limit Exceeded
+        </h3>
+        <div className="mt-2 text-sm text-purple-700">
+          <p>Too many requests within the allowed time window.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div className="border-l-4 border-gray-500 bg-gray-50 p-4">
+    <div className="flex">
+      <div className="ml-3">
+        <h3 className="text-sm font-medium text-gray-800">
+          500 - Internal Server Error
+        </h3>
+        <div className="mt-2 text-sm text-gray-700">
+          <p>Something went wrong on our end. Try again later.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+## Detailed Error Examples
+
+### 400 Bad Request
+
+**Missing Required Parameter:**
+```json
+{
+    "statusCode": 400,
+    "message": "Bad Request",
+    "error": "Missing required parameter: linkedin_url"
+}
+```
+
+**Invalid Parameter Format:**
+```json
+{
+    "statusCode": 400,
+    "message": "Bad Request", 
+    "error": "Invalid LinkedIn URL format"
+}
+```
+
+**Invalid Parameter Value:**
+```json
+{
+    "statusCode": 400,
+    "message": "Bad Request",
+    "error": "include_email must be 'include' or 'exclude'"
+}
+```
+
+### 401 Unauthorized
+
+**Missing API Key:**
+```json
+{
+    "statusCode": 401,
+    "message": "Unauthorized",
+    "error": "API key is required"
+}
+```
+
+**Invalid API Key:**
+```json
+{
+    "statusCode": 401,
+    "message": "Unauthorized", 
+    "error": "Invalid or missing API key"
+}
+```
+
+### 402 Insufficient Credits
+
+```json
+{
+    "statusCode": 402,
+    "message": "Insufficient credits",
+    "error": "Not sufficient credit available for request. Required: 5, Available: 2"
+}
+```
+
+### 404 Not Found
+
+**Resource Not Found:**
+```json
+{
+    "statusCode": 404,
+    "message": "Not Found",
+    "error": "Profile not found for the provided LinkedIn URL"
+}
+```
+
+**Endpoint Not Found:**
+```json
+{
+    "statusCode": 404,
+    "message": "Not Found",
+    "error": "API endpoint does not exist"
+}
+```
+
+### 429 Rate Limit Exceeded
+
+```json
+{
+    "statusCode": 429,
+    "message": "Rate Limit Exceeded",
+    "error": "Too many requests within the limit. Try again in 60 seconds"
+}
+```
+
+### 500 Internal Server Error
+
+```json
+{
+    "statusCode": 500,
+    "message": "Internal Server Error",
+    "error": "Something went wrong on our end"
+}
+```
+
+## Error Handling Best Practices
+
+### 1. Always Check Status Codes
+
+<CodeGroup>
+```javascript JavaScript
+const response = await fetch(endpoint, options);
+
+if (!response.ok) {
+  const errorData = await response.json();
+  console.error(`API Error ${response.status}:`, errorData.error);
+  
+  switch (response.status) {
+    case 400:
+      throw new Error(`Bad request: ${errorData.error}`);
+    case 401:
+      throw new Error('Authentication failed - check your API key');
+    case 429:
+      throw new Error('Rate limit exceeded - slow down requests');
+    case 500:
+      throw new Error('Server error - try again later');
+    default:
+      throw new Error(`Unexpected error: ${errorData.error}`);
+  }
+}
+
+const data = await response.json();
+```
+
+```python Python
+import requests
+
+response = requests.get(endpoint, headers=headers)
+
+if response.status_code != 200:
+    error_data = response.json()
+    
+    if response.status_code == 400:
+        raise ValueError(f"Bad request: {error_data['error']}")
+    elif response.status_code == 401:
+        raise PermissionError("Authentication failed - check your API key")
+    elif response.status_code == 429:
+        raise Exception("Rate limit exceeded - slow down requests")
+    elif response.status_code == 500:
+        raise Exception("Server error - try again later")
+    else:
+        raise Exception(f"Unexpected error: {error_data['error']}")
+
+data = response.json()
+```
+</CodeGroup>
+
+### 2. Implement Retry Logic for Transient Errors
+
+For 429 (rate limits) and 5xx (server errors), implement exponential backoff:
+
+```javascript
+async function makeRequestWithRetry(url, options, maxRetries = 3) {
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      const response = await fetch(url, options);
+      
+      // Success
+      if (response.ok) {
+        return await response.json();
+      }
+      
+      // Don't retry client errors (4xx except 429)
+      if (response.status >= 400 && response.status < 500 && response.status !== 429) {
+        const errorData = await response.json();
+        throw new Error(`Client error: ${errorData.error}`);
+      }
+      
+      // Retry for 429 and 5xx
+      if (response.status === 429 || response.status >= 500) {
+        if (attempt === maxRetries) {
+          const errorData = await response.json();
+          throw new Error(`Max retries exceeded: ${errorData.error}`);
+        }
+        
+        const delay = Math.min(1000 * Math.pow(2, attempt), 10000);
+        console.log(`Retrying in ${delay}ms... (attempt ${attempt + 1})`);
+        await new Promise(resolve => setTimeout(resolve, delay));
+        continue;
+      }
+      
+    } catch (error) {
+      if (attempt === maxRetries) throw error;
+      
+      const delay = Math.min(1000 * Math.pow(2, attempt), 10000);
+      await new Promise(resolve => setTimeout(resolve, delay));
+    }
+  }
+}
+```
+
+### 3. Log Errors for Debugging
+
+```javascript
+function logError(error, context) {
+  console.error('API Error:', {
+    timestamp: new Date().toISOString(),
+    context: context,
+    status: error.status,
+    message: error.message,
+    endpoint: error.endpoint
+  });
+}
+```
+
+## Troubleshooting Common Issues
+
+<AccordionGroup>
+  <Accordion title="Authentication Problems">
+    **Symptoms**: Getting 401 Unauthorized errors
+    
+    **Solutions**:
+    - Verify your API key is correct and properly included in the `X-API-KEY` header
+    - Check that your API key hasn't expired or been revoked
+    - Ensure you're not accidentally including extra spaces or characters
+    - Generate a new API key if needed
+  </Accordion>
+
+  <Accordion title="Rate Limiting Issues">
+    **Symptoms**: Getting 429 Rate Limit Exceeded errors
+    
+    **Solutions**:
+    - Implement request throttling in your application
+    - Use exponential backoff for retries
+    - Consider upgrading your plan for higher limits
+    - Distribute requests over time rather than in bursts
+  </Accordion>
+
+  <Accordion title="Credit Exhaustion">
+    **Symptoms**: Getting 402 Insufficient Credits errors
+    
+    **Solutions**:
+    - Check your credit balance in the Tuesday dashboard
+    - Only request enrichment data when necessary
+    - Consider upgrading your plan
+    - Implement credit usage monitoring
+  </Accordion>
+
+  <Accordion title="Invalid Parameters">
+    **Symptoms**: Getting 400 Bad Request errors
+    
+    **Solutions**:
+    - Verify all required parameters are included
+    - Check parameter formats (especially LinkedIn URLs)
+    - Ensure enum values are correct (e.g., "include" not "true")
+    - Review the API documentation for correct parameter names
+  </Accordion>
+
+  <Accordion title="Data Not Found">
+    **Symptoms**: Getting 404 Not Found errors
+    
+    **Solutions**:
+    - Verify the LinkedIn URL is publicly accessible
+    - Check that the profile or company exists
+    - Ensure URLs are properly encoded
+    - Try alternative identifiers if available
+  </Accordion>
+</AccordionGroup>
+
+## Getting Help
+
+If you're experiencing persistent errors or need additional assistance:
+
+<CardGroup cols={2}>
+  <Card title="Check System Status" icon="chart-line" href="https://status.tuesday.so">
+    Monitor our system status and uptime
+  </Card>
+  
+  <Card title="Contact Support" icon="envelope" href="mailto:support@tuesday.so">
+    Get help from our technical team
+  </Card>
+  
+  <Card title="API Reference" icon="code" href="/api-reference/auth/check-api-key">
+    Review detailed API documentation
+  </Card>
+  
+  <Card title="Dashboard" icon="gauge" href="https://app.tuesday.so">
+    Monitor your usage and credits
+  </Card>
+</CardGroup> 

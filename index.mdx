@@ -1,71 +1,82 @@
 ---
-title: Introduction Tuesday
-description: "Welcome to the home of your new documentation"
+title: 'Tuesday Public APIs'
+description: 'Programmatically access enriched company and professional profiles using LinkedIn URLs and related attributes'
 ---
 
-<img
-  className="block dark:hidden"
-  src="/images/hero-light.png"
-  alt="Hero Light"
-/>
-<img
-  className="hidden dark:block"
-  src="/images/hero-dark.png"
-  alt="Hero Dark"
-/>
+## Overview
 
-## Setting up
-
-The first step to world-class documentation is setting up your editing environments.
+The Tuesday Public APIs allow you to programmatically access enriched company and professional profiles using LinkedIn URLs and related attributes. Whether you're building B2B tools, enriching CRM data, or doing sales outreach automation, this API is designed to fit right into your workflows.
 
 <CardGroup cols={2}>
   <Card
-    title="Edit Your Docs"
-    icon="pen-to-square"
-    href="https://mintlify.com/docs/quickstart"
+    title="People APIs"
+    icon="users"
+    href="/api-reference/people/profile"
   >
-    Get your docs set up locally for easy development
+    Access detailed professional profiles and contact information
   </Card>
   <Card
-    title="Preview Changes"
-    icon="image"
-    href="https://mintlify.com/docs/development"
+    title="Company APIs"
+    icon="building"
+    href="/api-reference/company/profile"
   >
-    Preview your changes before you push to make sure they're perfect
+    Get comprehensive company data including funding, technology, and employees
+  </Card>
+  <Card
+    title="Authentication"
+    icon="key"
+    href="/authentication"
+  >
+    Learn how to authenticate your API requests
+  </Card>
+  <Card
+    title="Rate Limits"
+    icon="gauge"
+    href="/rate-limits-and-credits"
+  >
+    Understand API limits and credit system
   </Card>
 </CardGroup>
 
-## Make it yours
+## Key Features
 
-Update your docs to your brand and add valuable content for the best user conversion.
+<AccordionGroup>
+  <Accordion title="Rich Profile Data">
+    Access comprehensive professional and company profiles with verified contact information, employment history, and company insights.
+  </Accordion>
 
-<CardGroup cols={2}>
-  <Card
-    title="Customize Style"
-    icon="palette"
-    href="https://mintlify.com/docs/settings/global"
-  >
-    Customize your docs to your company's colors and brands
-  </Card>
-  <Card
-    title="Reference APIs"
-    icon="code"
-    href="https://mintlify.com/docs/api-playground/openapi"
-  >
-    Automatically generate endpoints from an OpenAPI spec
-  </Card>
-  <Card
-    title="Add Components"
-    icon="screwdriver-wrench"
-    href="https://mintlify.com/docs/content/components/accordions"
-  >
-    Build interactive features and designs to guide your users
-  </Card>
-  <Card
-    title="Get Inspiration"
-    icon="stars"
-    href="https://mintlify.com/customers"
-  >
-    Check out our showcase of our favorite documentation
-  </Card>
-</CardGroup>
+  <Accordion title="Contact Enrichment">
+    Enrich existing data with email addresses and phone numbers for targeted outreach campaigns.
+  </Accordion>
+
+  <Accordion title="Company Intelligence">
+    Get detailed company information including funding data, technology stack, website traffic, and employee insights.
+  </Accordion>
+
+  <Accordion title="Search & Discovery">
+    Use advanced filters to discover prospects and companies that match your ideal customer profile.
+  </Accordion>
+</AccordionGroup>
+
+## Getting Started
+
+<Steps>
+  <Step title="Get Your API Key">
+    Sign up for a Tuesday account and generate your API key from the dashboard.
+  </Step>
+  <Step title="Make Your First Request">
+    Try the Auth API to verify your API key is working correctly.
+  </Step>
+  <Step title="Explore the APIs">
+    Start with the People Profile API or Company Profile API to see the data available.
+  </Step>
+</Steps>
+
+## Quick Example
+
+```bash
+curl --location 'https://api.tuesday.so/api/v1/people/profile?linkedin_url=https://www.linkedin.com/in/example' \
+--header 'X-API-KEY: your-api-key-here'
+```
+
+Ready to get started? Check out our [Quickstart Guide](/quickstart) or dive into the [API Reference](/api-reference/auth/check-api-key).

@@ -1,0 +1,325 @@
+---
+title: "Get People Profile"
+api: "GET https://api.tuesday.so/api/v1/people/profile"
+description: "Retrieve a person's full profile by providing their LinkedIn URL"
+---
+
+## Overview
+
+Get comprehensive profile information for a person using their LinkedIn URL. This endpoint provides basic profile data and can be enriched with email addresses and phone numbers for additional credits.
+
+## Authentication
+
+<ParamField header="X-API-KEY" type="string" required>
+  Your Tuesday API key
+</ParamField>
+
+## Query Parameters
+
+<ParamField query="linkedin_url" type="string" required>
+  LinkedIn profile URL of the person
+  
+  **Example:** `https://www.linkedin.com/in/david-addiss-4725189`
+</ParamField>
+
+<ParamField query="include_email" type="string" default="exclude">
+  Include email address in the response
+  
+  **Options:** `include` | `exclude`
+  
+  **Additional Cost:** +2 credits when set to `include`
+</ParamField>
+
+<ParamField query="include_phone" type="string" default="exclude">
+  Include phone number in the response
+  
+  **Options:** `include` | `exclude`
+  
+  **Additional Cost:** +3 credits when set to `include`
+</ParamField>
+
+## Response
+
+<ResponseField name="data" type="object">
+  <Expandable title="Person Profile Data">
+    <ResponseField name="id" type="string">
+      Unique identifier for the person
+    </ResponseField>
+    <ResponseField name="name" type="string">
+      Full name of the person
+    </ResponseField>
+    <ResponseField name="first_name" type="string">
+      First name
+    </ResponseField>
+    <ResponseField name="last_name" type="string">
+      Last name
+    </ResponseField>
+    <ResponseField name="title" type="string">
+      Current job title
+    </ResponseField>
+    <ResponseField name="seniority" type="string">
+      Seniority level (e.g., "Staff", "Manager", "Director")
+    </ResponseField>
+    <ResponseField name="linkedin_url" type="string">
+      LinkedIn profile URL
+    </ResponseField>
+    <ResponseField name="job_start_date" type="string">
+      Start date of current position (YYYY-MM-DD format)
+    </ResponseField>
+    <ResponseField name="city" type="string">
+      Current city
+    </ResponseField>
+    <ResponseField name="state" type="string">
+      Current state/region
+    </ResponseField>
+    <ResponseField name="country" type="string">
+      Current country
+    </ResponseField>
+    <ResponseField name="country_code" type="string">
+      Two-letter country code
+    </ResponseField>
+    <ResponseField name="country_region" type="string">
+      Geographic region (e.g., "NORAM", "EMEA", "APAC")
+    </ResponseField>
+    <ResponseField name="email" type="string">
+      Email address (only when `include_email=include`)
+    </ResponseField>
+    <ResponseField name="mobile_number" type="string">
+      Phone number (only when `include_phone=include`)
+    </ResponseField>
+    <ResponseField name="organization_id" type="string">
+      Unique identifier for the person's current organization
+    </ResponseField>
+    <ResponseField name="organizations.name" type="string">
+      Current organization name
+    </ResponseField>
+    <ResponseField name="organizations.linkedin_url" type="string">
+      Organization's LinkedIn URL
+    </ResponseField>
+    <ResponseField name="organizations.primary_domain" type="string">
+      Organization's primary domain
+    </ResponseField>
+    <ResponseField name="organizations.website_url" type="string">
+      Organization's website URL
+    </ResponseField>
+    <ResponseField name="organizations.founded_year" type="number">
+      Year the organization was founded
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="statusCode" type="number">
+  HTTP status code (200 for success)
+</ResponseField>
+
+<ResponseField name="message" type="string">
+  Response message
+</ResponseField>
+
+## Example Requests
+
+<CodeGroup>
+
+```bash Basic Profile
+curl --location 'https://api.tuesday.so/api/v1/people/profile?linkedin_url=https://www.linkedin.com/in/david-addiss-4725189' \
+--header 'X-API-KEY: your-api-key-here'
+```
+
+```bash With Email & Phone
+curl --location 'https://api.tuesday.so/api/v1/people/profile?linkedin_url=https://www.linkedin.com/in/david-addiss-4725189&include_email=include&include_phone=include' \
+--header 'X-API-KEY: your-api-key-here'
+```
+
+```javascript JavaScript
+const linkedin_url = 'https://www.linkedin.com/in/david-addiss-4725189';
+const params = new URLSearchParams({
+  linkedin_url,
+  include_email: 'include',
+  include_phone: 'include'
+});
+
+const response = await fetch(
+  `https://api.tuesday.so/api/v1/people/profile?${params}`,
+  {
+    headers: {
+      'X-API-KEY': 'your-api-key-here'
+    }
+  }
+);
+
+const profile = await response.json();
+console.log(profile);
+```
+
+```python Python
+import requests
+
+url = "https://api.tuesday.so/api/v1/people/profile"
+params = {
+    "linkedin_url": "https://www.linkedin.com/in/david-addiss-4725189",
+    "include_email": "include",
+    "include_phone": "include"
+}
+headers = {
+    "X-API-KEY": "your-api-key-here"
+}
+
+response = requests.get(url, params=params, headers=headers)
+profile = response.json()
+print(profile)
+```
+
+```php PHP
+<?php
+$linkedin_url = "https://www.linkedin.com/in/david-addiss-4725189";
+$params = http_build_query([
+    'linkedin_url' => $linkedin_url,
+    'include_email' => 'include',
+    'include_phone' => 'include'
+]);
+
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, "https://api.tuesday.so/api/v1/people/profile?$params");
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_HTTPHEADER, [
+    'X-API-KEY: your-api-key-here'
+]);
+
+$response = curl_exec($ch);
+curl_close($ch);
+
+$data = json_decode($response, true);
+print_r($data);
+?>
+```
+
+</CodeGroup>
+
+## Example Response
+
+<ResponseExample>
+
+```json Response
+{
+    "data": {
+        "city": "St Petersburg",
+        "country": "United States",
+        "country_code": "US",
+        "country_region": "NORAM",
+        "email": "david.addiss@sempersolaris.com",
+        "first_name": "David",
+        "id": "tu_pacyf3uhs",
+        "job_start_date": "2022-04-01",
+        "last_name": "Addiss",
+        "linkedin_url": "https://www.linkedin.com/in/david-addiss-4725189",
+        "mobile_number": "+1 813-407-3977",
+        "name": "David Addiss",
+        "organization_id": "tu_oac4h5wgp",
+        "organizations.founded_year": 2012,
+        "organizations.linkedin_url": "https://www.linkedin.com/company/semper-solaris",
+        "organizations.name": "Semper Solaris",
+        "organizations.primary_domain": "sempersolaris.com",
+        "organizations.website_url": "https://www.sempersolaris.com?utm_source=linkedin",
+        "seniority": "Staff",
+        "state": "Florida",
+        "title": "Energy Consultant"
+    },
+    "statusCode": 200,
+    "message": "Success"
+}
+```
+
+</ResponseExample>
+
+## Credit Usage
+
+<div className="grid grid-cols-1 md:grid-cols-3 gap-4 my-6">
+  <div className="border rounded-lg p-4 text-center">
+    <div className="text-2xl font-bold text-blue-600">{1}</div>
+    <div className="text-sm text-gray-600">Base Profile</div>
+  </div>
+  <div className="border rounded-lg p-4 text-center">
+    <div className="text-2xl font-bold text-orange-600">{"+2"}</div>
+    <div className="text-sm text-gray-600">Email Enrichment</div>
+  </div>
+  <div className="border rounded-lg p-4 text-center">
+    <div className="text-2xl font-bold text-red-600">{"+3"}</div>
+    <div className="text-sm text-gray-600">Phone Enrichment</div>
+  </div>
+</div>
+
+**Examples:**
+- Basic profile: **1 credit**
+- Profile + email: **3 credits** (1 + 2)
+- Profile + phone: **4 credits** (1 + 3)
+- Profile + email + phone: **6 credits** (1 + 2 + 3)
+
+## Error Responses
+
+<AccordionGroup>
+  <Accordion title="400 Bad Request - Missing LinkedIn URL">
+    ```json
+    {
+        "statusCode": 400,
+        "message": "Bad Request",
+        "error": "Missing required parameter: linkedin_url"
+    }
+    ```
+  </Accordion>
+  
+  <Accordion title="400 Bad Request - Invalid LinkedIn URL">
+    ```json
+    {
+        "statusCode": 400,
+        "message": "Bad Request",
+        "error": "Invalid LinkedIn URL format"
+    }
+    ```
+  </Accordion>
+  
+  <Accordion title="404 Not Found - Profile Not Found">
+    ```json
+    {
+        "statusCode": 404,
+        "message": "Not Found",
+        "error": "Profile not found for the provided LinkedIn URL"
+    }
+    ```
+  </Accordion>
+  
+  <Accordion title="402 Insufficient Credits">
+    ```json
+    {
+        "statusCode": 402,
+        "message": "Insufficient credits",
+        "error": "Not sufficient credit available for request"
+    }
+    ```
+  </Accordion>
+</AccordionGroup>
+
+## Use Cases
+
+<CardGroup cols={2}>
+  <Card title="CRM Enrichment" icon="database">
+    Enrich existing contact records with verified profile information
+  </Card>
+  
+  <Card title="Lead Qualification" icon="target">
+    Research prospects before outreach to personalize messaging
+  </Card>
+  
+  <Card title="Contact Discovery" icon="magnifying-glass">
+    Find contact information for specific individuals
+  </Card>
+  
+  <Card title="Due Diligence" icon="shield-check">
+    Verify professional information for business purposes
+  </Card>
+</CardGroup>
+
+## Related Endpoints
+
+- [People Lookup API](/api-reference/people/lookup) - Find people by attributes like name and company
+- [People Search API](/api-reference/people/search) - Search for people using advanced filters
+- [Reverse Email Lookup](/api-reference/people/lookup-email) - Find profile by email address 

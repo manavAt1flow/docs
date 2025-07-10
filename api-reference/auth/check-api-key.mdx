@@ -1,0 +1,165 @@
+---
+title: "Check API Key"
+api: "GET https://api.tuesday.so/api/v1/public/auth"
+description: "Verify if your API key is valid and retrieve workspace information"
+---
+
+## Overview
+
+Use this endpoint to verify that your API key is valid and retrieve information about your workspace. This is useful for testing your authentication setup before making other API calls.
+
+## Authentication
+
+<ParamField header="X-API-KEY" type="string" required>
+  Your Tuesday API key. You can find this in your [Tuesday Dashboard](https://app.tuesday.so).
+</ParamField>
+
+## Response
+
+<ResponseField name="data" type="object">
+  <Expandable title="data">
+    <ResponseField name="name" type="string">
+      The name of your workspace
+    </ResponseField>
+    <ResponseField name="id" type="string">
+      Unique identifier for your workspace
+    </ResponseField>
+    <ResponseField name="user_id" type="string">
+      Your user identifier
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="statusCode" type="number">
+  HTTP status code (200 for success)
+</ResponseField>
+
+<ResponseField name="message" type="string">
+  Response message ("Success" for valid requests)
+</ResponseField>
+
+## Example Request
+
+<CodeGroup>
+
+```bash cURL
+curl --location 'https://api.tuesday.so/api/v1/public/auth' \
+--header 'X-API-KEY: a285dcd7-7a91-42e2-ae37-9a91e72588b3'
+```
+
+```javascript JavaScript
+const response = await fetch('https://api.tuesday.so/api/v1/public/auth', {
+  method: 'GET',
+  headers: {
+    'X-API-KEY': 'a285dcd7-7a91-42e2-ae37-9a91e72588b3'
+  }
+});
+
+const data = await response.json();
+console.log(data);
+```
+
+```python Python
+import requests
+
+headers = {
+    'X-API-KEY': 'a285dcd7-7a91-42e2-ae37-9a91e72588b3'
+}
+
+response = requests.get(
+    'https://api.tuesday.so/api/v1/public/auth',
+    headers=headers
+)
+
+print(response.json())
+```
+
+```php PHP
+<?php
+$ch = curl_init();
+
+curl_setopt($ch, CURLOPT_URL, 'https://api.tuesday.so/api/v1/public/auth');
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_HTTPHEADER, [
+    'X-API-KEY: a285dcd7-7a91-42e2-ae37-9a91e72588b3'
+]);
+
+$response = curl_exec($ch);
+curl_close($ch);
+
+$data = json_decode($response, true);
+print_r($data);
+?>
+```
+
+</CodeGroup>
+
+## Example Response
+
+<ResponseExample>
+
+```json Response
+{
+    "data": {
+        "name": "Joe's Workspace",
+        "id": "ws30ngrb03luqxcl27",
+        "user_id": "usr19g6tln8rlii8"
+    },
+    "statusCode": 200,
+    "message": "Success"
+}
+```
+
+</ResponseExample>
+
+## Error Responses
+
+<AccordionGroup>
+  <Accordion title="401 Unauthorized - Missing API Key">
+    ```json
+    {
+        "statusCode": 401,
+        "message": "Unauthorized",
+        "error": "API key is required"
+    }
+    ```
+  </Accordion>
+  
+  <Accordion title="401 Unauthorized - Invalid API Key">
+    ```json
+    {
+        "statusCode": 401,
+        "message": "Unauthorized",
+        "error": "Invalid or missing API key"
+    }
+    ```
+  </Accordion>
+</AccordionGroup>
+
+## Use Cases
+
+<CardGroup cols={2}>
+  <Card title="Authentication Testing" icon="shield-check">
+    Test your API key setup before integrating other endpoints
+  </Card>
+  
+  <Card title="Health Checks" icon="heart-pulse">
+    Monitor API connectivity and authentication status
+  </Card>
+  
+  <Card title="Workspace Info" icon="building">
+    Retrieve workspace details for display in your application
+  </Card>
+  
+  <Card title="Integration Setup" icon="plug">
+    Verify credentials during initial integration setup
+  </Card>
+</CardGroup>
+
+## Next Steps
+
+Once your API key is verified, you can start using the other Tuesday APIs:
+
+- [People Profile API](/api-reference/people/profile) - Get detailed person profiles
+- [Company Profile API](/api-reference/company/profile) - Access company information
+- [Search APIs](/api-reference/people/search) - Find people and companies 
