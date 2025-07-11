@@ -227,9 +227,7 @@ mint deploy
 All requests require an API key in the `X-API-KEY` header. [Get your API key here](https://app.tuesday.so/settings/api).
 
 ### Rate Limits
-- **Free Tier:** 100 requests/month
-- **Pro Tier:** 10,000 requests/month  
-- **Enterprise:** Custom limits
+- 20 requests/minute
 
 ### Response Format
 All responses follow a consistent JSON structure:
@@ -257,6 +255,6 @@ This documentation is open-source and available under the [MIT License](LICENSE)
 
 ---
 
-**Ready to start extracting LinkedIn data?** [Get your API key](https://app.tuesday.so/api-keys) and begin building with the most comprehensive people intelligence API available.
+**Ready to start extracting LinkedIn data?** [Get your API key](https://app.tuesday.so/settings/api) and begin building with the most comprehensive people intelligence API available.
 
 **Keywords:** linkedin scraping, email lookup, phone number api, reverse lookup, linkedin api, people search, company intelligence, contact enrichment, mobile number api, linkedin profile extraction, email to profile lookup, phone number reverse lookup, professional data extraction, sales intelligence, lead generation, crm enrichment, market research, competitive intelligence, talent acquisition, b2b data, business intelligence, contact discovery, linkedin url scraping, employee search, prospect discovery, linkedin company data, social media api, professional networking data, contact verification, data enrichment, people analytics, sales automation, linkedin data extraction
