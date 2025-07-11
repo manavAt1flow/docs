@@ -219,13 +219,12 @@ mint deploy
 
 - **📊 API Dashboard:** [app.tuesday.so](https://app.tuesday.so)
 - **📚 Documentation:** [docs.tuesday.so](https://docs.tuesday.so)  
-- **🔑 Get API Key:** [app.tuesday.so/api-keys](https://app.tuesday.so/api-keys)
-- **💬 Support:** [support@tuesday.so](mailto:support@tuesday.so)
+- **🔑 Get API Key:** [app.tuesday.so/api-keys](https://app.tuesday.so/settings/api)
 
 ## 📋 API Reference
 
 ### Authentication
-All requests require an API key in the `X-API-KEY` header. [Get your API key here](https://app.tuesday.so/api-keys).
+All requests require an API key in the `X-API-KEY` header. [Get your API key here](https://app.tuesday.so/settings/api).
 
 ### Rate Limits
 - **Free Tier:** 100 requests/month
@@ -255,10 +254,6 @@ This is an open-source documentation project. Contributions are welcome!
 ## 📄 License
 
 This documentation is open-source and available under the [MIT License](LICENSE).
-
-## 🌟 Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=tuesdayco/docs&type=Date)](https://star-history.com/#tuesdayco/docs&Date)
 
 ---
 
