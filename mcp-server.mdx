@@ -1,0 +1,123 @@
+---
+title: "MCP Server"
+description: "Use the Tuesday Leads API with AI applications through Model Context Protocol (MCP)"
+---
+
+## What is MCP?
+
+Model Context Protocol (MCP) is an open standard introduced by Anthropic that enables AI applications to seamlessly connect with external data sources and tools. With MCP, AI assistants like Claude Desktop, Cursor, and Windsurf can directly interact with the Tuesday Leads API.
+
+## Benefits of Using Tuesday MCP Server
+
+- **Real-time API access**: AI applications can make live API calls to search for people and companies
+- **Contextual documentation**: AI can reference our complete API documentation to provide accurate guidance
+- **Seamless integration**: Works with popular AI tools without custom code
+- **Always up-to-date**: Automatically syncs with the latest API changes and documentation
+
+## Installation
+
+Install the Tuesday MCP server using the Mintlify MCP package:
+
+```bash
+npx @mintlify/mcp@latest add tuesday
+```
+
+This command will:
+1. Download and configure the Tuesday MCP server
+2. Add it to your MCP client configuration
+3. Make it available in supported AI applications
+
+## Supported AI Applications
+
+The Tuesday MCP server works with any MCP-compatible client, including:
+
+- **Claude Desktop** - Anthropic's desktop AI assistant
+- **Cursor** - AI-powered code editor
+- **Windsurf** - AI development environment
+- Any other MCP-compatible application
+
+## Available Tools
+
+The MCP server provides the following tools:
+
+### Search Tool
+Search across the Tuesday Leads API documentation to get contextual information about:
+- API endpoints and parameters
+- Authentication requirements
+- Error handling
+- Rate limits and usage guidelines
+- Code examples and best practices
+
+## Usage Examples
+
+Once installed, you can use the Tuesday MCP server in your AI applications:
+
+### Getting API Information
+```
+"How do I authenticate with the Tuesday API?"
+```
+
+The AI will search through our documentation and provide accurate authentication instructions.
+
+### API Implementation Help
+```
+"Show me how to search for people using the Tuesday API"
+```
+
+The AI can provide code examples and explain the people search endpoint.
+
+### Troubleshooting
+```
+"I'm getting a 401 error with the Tuesday API. What should I check?"
+```
+
+The AI will reference our error documentation to help debug authentication issues.
+
+## Configuration
+
+The MCP server is automatically configured when installed. The configuration includes:
+
+```json
+{
+  "mcpServers": {
+    "tuesday": {
+      "command": "node",
+      "args": ["/path/to/tuesday/src/index.js"]
+    }
+  }
+}
+```
+
+## Troubleshooting
+
+### Server Not Found
+If your AI application can't find the Tuesday MCP server:
+
+1. Verify the installation completed successfully
+2. Restart your AI application
+3. Check that Node.js is installed and accessible
+
+### Connection Issues
+If the server fails to connect:
+
+1. Ensure you have an active internet connection
+2. Check that the server process is running
+3. Verify your MCP client configuration
+
+### Getting Help
+For additional support:
+- Check our [API documentation](/api-reference)
+- Review [common errors](/errors)
+- Contact our support team
+
+## Next Steps
+
+After setting up the MCP server:
+
+1. **Test the integration** - Ask your AI application about the Tuesday API
+2. **Explore capabilities** - Try different types of queries about our documentation
+3. **Build with confidence** - Use AI assistance to implement Tuesday API features
+
+<Info>
+The Tuesday MCP server provides read-only access to our documentation. To make actual API calls, you'll still need a valid API key from your [Tuesday Dashboard](https://app.tuesday.so/settings/api).
+</Info> 

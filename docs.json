@@ -22,6 +22,12 @@
               "rate-limits-and-credits",
               "errors"
             ]
+          },
+          {
+            "group": "Integrations",
+            "pages": [
+              "mcp-server"
+            ]
           }
         ]
       },
